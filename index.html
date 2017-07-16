@@ -23,8 +23,6 @@
 					<input  type="checkbox" ng-model="todo.done"> <span ng-bind="todo.todoText"></span>
 				</li>
 			</ul>
-
-		</form>
 		<div>
 		<form class="bs-example bs-example-form" role="form" ng-submit="todoAdd()">
 			<div class="row">
@@ -49,23 +47,23 @@
 var app = angular.module('myApp', []); 
 app.controller('todoCtrl', function($scope) {
 
-    $scope.todoList = [{todoText:'Go to grocery store', done:false}]; <!-- initial value of the to-do list-->
+	$scope.todoList = [{todoText:'Go to grocery store', done:false}]; <!-- initial value of the to-do list-->
 	
 	<!-- add list item to the to-do list-->
-    $scope.todoAdd = function() { 
-        $scope.todoList.push({todoText:$scope.todoInput, done:false});
-        $scope.todoInput = "";
-    };
+    	$scope.todoAdd = function() { 
+        	$scope.todoList.push({todoText:$scope.todoInput, done:false});
+        	$scope.todoInput = "";
+    	};
     
-	<!-- remove all checked items from the to-do list-->
-    $scope.remove = function() {
-        var oldList = $scope.todoList;
-        $scope.todoList = [];
-        angular.forEach(oldList, function(todo) {
-            if (!todo.done) $scope.todoList.push(todo);
-        });
+    	<!-- remove all checked items from the to-do list-->
+    	$scope.remove = function() {
+        	var oldList = $scope.todoList;
+        	$scope.todoList = [];
+        	angular.forEach(oldList, function(todo) {
+            		if (!todo.done) $scope.todoList.push(todo);
+        	});
 		if ($scope.allDone) $scope.allDone=false;
-    };
+    	};
 	
 	<!-- mark all items from the to-do list-->
 	$scope.markAll = function (done) {
