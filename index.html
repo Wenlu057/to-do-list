@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">  
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="todoCtrl">
+<div style="padding: 10px 400px 10px;">
+	<div class="panel panel-success">
+		<div class="panel-heading">
+			<h3 class="panel-title">My To-do List</h3>
+		</div>
+		<div class="panel-body">
+			<ul class="list-group" >
+				<li class="list-group-item">
+					<input  class="list-group-item-heading" type="checkbox" ng-model="allDone" ng-click="markAll(allDone)">
+					<span style="float: right;">
+						<button class="btn btn-default" ng-click="remove()">Delete</button> <!--Remove button-->
+					</span>
+					<p class="list-group-item-text" style ="font-size: 50%;font-weight:bold;"> All </p>	
+				</li>
+				<li class="list-group-item" ng-repeat="todo in todoList"> <!--display all to-do list -->
+					<input  type="checkbox" ng-model="todo.done"> <span ng-bind="todo.todoText"></span>
+				</li>
+			</ul>
+
+		</form>
+		<div>
+		<form class="bs-example bs-example-form" role="form" ng-submit="todoAdd()">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="input-group">
+						<input type="text" class="form-control" ng-model="todoInput" placeholder="+ Write a to-do item"> <!--input to-to list here -->
+						<span class="input-group-btn">
+						<input class="btn btn-default" type="submit" value="Add"> <!--Add button-->
+						</span>
+					</div>
+				</div>
+			</div>
+		</form>
+		</div>
+		</div>
+	</div>
+</div>
+
+
+
+<script>
+var app = angular.module('myApp', []); 
+app.controller('todoCtrl', function($scope) {
+
+    $scope.todoList = [{todoText:'Go to grocery store', done:false}]; <!-- initial value of the to-do list-->
+	
+	<!-- add list item to the to-do list-->
+    $scope.todoAdd = function() { 
+        $scope.todoList.push({todoText:$scope.todoInput, done:false});
+        $scope.todoInput = "";
+    };
+    
+	<!-- remove all checked items from the to-do list-->
+    $scope.remove = function() {
+        var oldList = $scope.todoList;
+        $scope.todoList = [];
+        angular.forEach(oldList, function(todo) {
+            if (!todo.done) $scope.todoList.push(todo);
+        });
+		if ($scope.allDone) $scope.allDone=false;
+    };
+	
+	<!-- mark all items from the to-do list-->
+	$scope.markAll = function (done) {
+	    var list = $scope.todoList;
+		angular.forEach(list, function (todo) {
+			if (todo.done !== done) {
+				todo.done = done;
+			}
+		});
+	};
+});
+</script>
+</body>
+</html>
